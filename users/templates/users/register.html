@@ -1,0 +1,23 @@
+{% extends 'mall/base.html' %}
+{% load bootstrap4 %}
+
+
+{% block header %}
+    <br>
+    <h3>Register an account for more benefits</h3>
+    <hr>
+{% endblock header %}
+
+
+{% block content %}
+    <form method="post" action="{% url 'users:register' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <button name="register" class="btn btn-outline-primary">register</button>
+        {% endbuttons %}
+
+        <input type="hidden" name="next" value="{% url 'mall:index' %}"/>
+    </form>
+{% endblock content %}

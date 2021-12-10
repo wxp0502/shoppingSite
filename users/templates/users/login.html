@@ -1,17 +1,17 @@
-{% extends 'users/base.html' %}
+{% extends 'mall/base.html' %}
 {% load bootstrap4 %}
 
 {% block header %}
-        <br>
-
-    <h2>Log in to your account</h2><hr>
+    <br>
+    <h2>Log in to your account</h2>
+    <hr>
 {% endblock header %}
 
 
 {% block content %}
     <br>
     {% if form.errors %}
-        <p>shit</p>
+        <p>something wrong</p>
     {% endif %}
 
     <form method="post" action="{% url 'users:login' %}">
@@ -22,6 +22,6 @@
             <button name="login" class="btn btn-outline-primary">log in</button>
         {% endbuttons %}
 
-        <input type="hidden" name="next" value="{% url 'users:index' %}"/>
+        <input type="hidden" name="next" value="{% url 'mall:index' %}"/>
     </form>
 {% endblock content %}

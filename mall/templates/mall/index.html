@@ -1,0 +1,12 @@
+{% extends 'mall/base.html' %}
+
+{% block content %}
+    <br>
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, stranger!</h1>
+        <p class="lead">This is a simple shopping mall</p>
+        <hr class="my-4">
+        <p>created by william</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'users:login' %}" role="button">Learn more</a>
+    </div>
+{% endblock %}

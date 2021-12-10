@@ -1,0 +1,59 @@
+{% extends 'mall/base.html' %}
+
+{% block header %}
+
+{% endblock header %}
+
+
+{% block content %}
+    <div class="row">
+        {% for good in goods %}
+
+            <div class="col-md-2">
+                <br>
+                <div class="zoomImage"
+                                 style="
+                                         background-image:url('../../../media/{{ good.photo }}');
+                                         width: 100%;
+                                         height: 155px;
+                                         {#padding-bottom: 100%;#}
+                                         overflow: hidden;
+                                         background-position: center center;
+                                         background-repeat: no-repeat;
+                                         -webkit-background-size: cover;
+                                         -moz-background-size: cover;
+                                         background-size: cover;"></div>
+                <div class="card" style="overflow: hidden">
+{#                    <div class="row" style="overflow: hidden; height: 200px;width: auto">#}
+{#                        <img src="../../../media/{{ good.photo }}" class="card-img-top" alt="...">#}
+{#                    </div>#}
+
+                    <p class="text-left" style="margin: 0">
+                        &nbsp;&nbsp; {{ good.name }}
+                    </p>
+                    <p class="text-left" style="color: coral;margin: 0">
+                        &nbsp;&nbsp; <small>￥：</small> {{ good.price }}
+                    </p>
+                    <a href="{{ good.id }}">
+                        <button type="button" class="btn btn-light btn-block btn-sm">
+                            查看详情
+                        </button>
+                    </a>
+                    <a href="#">
+                        <button type="button" class="btn btn-light btn-block btn-sm">
+                            加入购物车
+                        </button>
+                    </a>
+
+                </div>
+                <br>
+            </div>
+        {% empty %}
+            <p>no commodity have been added yet.</p>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+<body>
+shit here
+</body>
