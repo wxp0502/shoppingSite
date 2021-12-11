@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from .models import Commodity
 
@@ -13,3 +14,7 @@ def homepage(request):
     goods = Commodity.objects.all()
     context = {'goods': goods}
     return render(request, 'mall/home.html', context)
+
+@login_required()
+def cart(request):
+    return render(request, 'mall/cart.html')

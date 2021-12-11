@@ -1,5 +1,12 @@
 {% extends 'mall/base.html' %}
 
 {% block content %}
-    log out
+    <br>
+    <div class="jumbotron">
+        <h1 class="display-4">注销成功!</h1>
+        <p class="lead">可以浏览商品页面或登录以获取购买商品权限</p>
+        <hr class="my-4">
+{#        <p>created by william</p>#}
+        <a class="btn btn-primary btn-lg" href="{% url 'users:login' %}" role="button">登录</a>
+    </div>
 {% endblock %}

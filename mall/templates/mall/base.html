@@ -25,31 +25,33 @@
         {#        根据窗口大小隐藏的按钮 #}
         <div class="collapse navbar-collapse" id="navbarScroll">
             {#          蠢方法解决了 navbar-right 没有效果的失误。。#}
-            <div class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="max-height: 100px;">
-            <span class="navbar-text">
-                it's a mall selling dream and goods
-            </span>
+            <div class="nav navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="max-height: 100px;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mall:home' %}">首页</a>
+                </li>
             </div>
 
             {#            导航条右侧, 登陆注册以及状态判断#}
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link">Hello, {{ user.username }}</a>
+                        <a class="nav-link" href="#">欢迎, {{ user.username }}！</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:logout' %}">log out</a>
+                        <a class="nav-link" href="{% url 'mall:cart' %}">我的购物车</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:logout' %}">注销</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:login' %}">log in</a>
+                        <a class="nav-link" href="{% url 'users:login' %}">登录</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:register' %}">register</a>
+                        <a class="nav-link" href="{% url 'users:register' %}">注册</a>
                     </li>
                 {% endif %}
             </ul>
-
         </div>
     </div>
 

@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # my
     path('users/', include(('users.urls', 'users'), namespace='users')),
-    path('mall/', include(('mall.urls', 'mall'), namespace='mall')),
+    path('', include(('mall.urls', 'mall'), namespace='mall')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # super user   : william shitman14@WXP
