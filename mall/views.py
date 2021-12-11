@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
+from django.core.mail import send_mail
 from .models import Commodity, MyCommodity
 
 
@@ -11,21 +11,20 @@ def index(request):
 
 
 def homepage(request):
-
     if request.method == 'POST':
-        print('---------------')
+        # print('---------------')
         gid = request.POST['gid']
-        print(gid)
+        # print(gid)
         mys = MyCommodity.objects.all()
         flag = 0
         for m in mys:
             # print(m.goods.id, end= '--')
-            print(type(m.goods.id))
-            print(m.goods.id == gid)
-            print(type(gid))
+            # print(type(m.goods.id))
+            # print(m.goods.id == gid)
+            # print(type(gid))
 
             if m.goods.id == eval(gid):
-                print('================')
+                # print('================')
                 m.amount += 1
                 m.save()
                 flag += 1
@@ -46,3 +45,34 @@ def cart(request):
     my_cart = MyCommodity.objects.filter(owner=request.user).order_by('date_added')
     context = {'my_cart': my_cart}
     return render(request, 'mall/cart.html', context)
+
+
+@login_required()
+def send_email(request):
+    context = {}
+    if request.method == 'POST':
+        my_id = request.POST['my_id']
+        goods = []
+        # print('------------------------')
+        for i in MyCommodity.objects.all():
+            # print('22222')
+            if i.id == eval(my_id):
+                # print('3333333333')
+                goods.append(i)
+        context = {'goods': goods}
+    return render(request, 'mall/send_email.html', context)
+
+
+@login_required()
+def purchased(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        goods = request.POST['goods']
+        send_mail(
+            subject='感想购买WMall商品，祝您生活愉快！！！',
+            message=r'shit you',
+            from_email='2396469068@qq.com',
+            recipient_list=[fr'{email}'],
+            fail_silently=False
+        )
+    return render(request, 'mall/purchased.html')

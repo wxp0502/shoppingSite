@@ -1,4 +1,5 @@
 {% extends 'mall/base.html' %}
+{% load bootstrap4 %}
 
 
 {% block header %}
@@ -28,7 +29,7 @@
 
 {% block content %}
     {% for my in my_cart %}
-        <p class="container row" style="margin: 0">
+        <div class="container row" style="margin: 0">
     <span class="col-4 text-left" style="margin-left: 0">
         {{ my.goods.name }}
     </span>
@@ -43,9 +44,18 @@
                 {{ my.amount }} * {{ my.goods.price }}
             </span>
             <span class="col-2 text-right">
-                操作
+                <!-- Button trigger modal -->
+                <form action="{% url 'mall:send_email' %}" method="post">
+                    {% csrf_token %}
+                    <input name="my_id" type="hidden" value="{{ my.id }}">
+                        <button type="submit" class="btn btn-outline-danger">
+                            购买
+                        </button>
+                </form>
             </span>
-        </p>
+
+        </div>
     {% endfor %}
+
 
 {% endblock content %}
