@@ -40,11 +40,13 @@
                         </button>
                     </a>
                     {% if user.is_authenticated %}
-                        <a href="#">
-                            <button type="button" class="btn btn-light btn-block btn-sm">
+                        <form action="{% url 'mall:home' %}" method="post" style="margin: 0;">
+                        {% csrf_token %}
+                        <input name="gid" type="hidden" value="{{ good.id }}">
+                        <button type="submit" class="btn btn-light btn-block btn-sm">
                                 加入购物车
                             </button>
-                        </a>
+                        </form>
                     {% endif %}
 
 

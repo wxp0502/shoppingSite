@@ -11,6 +11,30 @@ def index(request):
 
 
 def homepage(request):
+
+    if request.method == 'POST':
+        print('---------------')
+        gid = request.POST['gid']
+        print(gid)
+        mys = MyCommodity.objects.all()
+        flag = 0
+        for m in mys:
+            # print(m.goods.id, end= '--')
+            print(type(m.goods.id))
+            print(m.goods.id == gid)
+            print(type(gid))
+
+            if m.goods.id == eval(gid):
+                print('================')
+                m.amount += 1
+                m.save()
+                flag += 1
+        if flag == 0:
+            new_my = MyCommodity(amount=1,
+                                 goods=Commodity.objects.get(id=gid),
+                                 owner=request.user)
+            new_my.save()
+
     goods = Commodity.objects.all()
     context = {'goods': goods}
     return render(request, 'mall/home.html', context)

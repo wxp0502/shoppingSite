@@ -19,7 +19,7 @@ class MyCommodity(models.Model):
     amount = models.PositiveIntegerField()
     goods = models.ForeignKey(Commodity, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_added = models.DateTimeField()
+    date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.goods.name
