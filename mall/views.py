@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
-from .models import Commodity
+from .models import Commodity, MyCommodity
 
 
 # Create your views here.
@@ -15,6 +15,10 @@ def homepage(request):
     context = {'goods': goods}
     return render(request, 'mall/home.html', context)
 
+
 @login_required()
 def cart(request):
-    return render(request, 'mall/cart.html')
+    """ 显示用户的购物车 """
+    my_cart = MyCommodity.objects.filter(owner=request.user).order_by('date_added')
+    context = {'my_cart': my_cart}
+    return render(request, 'mall/cart.html', context)

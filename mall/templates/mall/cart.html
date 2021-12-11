@@ -2,10 +2,50 @@
 
 
 {% block header %}
-    <br><h3>{{ user.username }} 的购物车</h3><hr>
+    <br><h3>{{ user.username }} 的购物车</h3>
+    <hr>
+    <p class="container row" style="margin: 0">
+    <span class="col-4 text-left" style="margin-left: 0">
+        商品详情
+    </span>
+        <span class="col-2">
+                单价
+            </span>
+
+        <span class="col-2">
+                数量
+            </span>
+        <span class="col-2">
+                金额
+            </span>
+        <span class="col-2 text-right">
+                操作
+            </span>
+    </p>
+
 {% endblock header %}
 
 
 {% block content %}
-    shit here
+    {% for my in my_cart %}
+        <p class="container row" style="margin: 0">
+    <span class="col-4 text-left" style="margin-left: 0">
+        {{ my.goods.name }}
+    </span>
+            <span class="col-2">
+                {{ my.goods.price }}
+            </span>
+
+            <span class="col-2">
+                {{ my.amount }}
+            </span>
+            <span class="col-2">
+                {{ my.amount }} * {{ my.goods.price }}
+            </span>
+            <span class="col-2 text-right">
+                操作
+            </span>
+        </p>
+    {% endfor %}
+
 {% endblock content %}
