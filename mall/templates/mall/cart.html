@@ -67,16 +67,25 @@
                               style="line-height: 100px; color: coral"> <small>￥:</small> {{ my.total_cost|floatformat }}</span>
                     </div>
                     <div class="col-2 text-center" style="display: flex; justify-content: center;align-items: center;">
-                        <form action="{% url 'mall:send_email' %}" method="post" style="margin: 0;">
+
+                        <form action="{% url 'mall:cart' %}" method="post" style="margin: 0;">
                             {% csrf_token %}
+                            <input name="remove" type="hidden" value="1">
                             <input name="my_id" type="hidden" value="{{ my.id }}">
+                            &nbsp;
                             <button type="submit" class="btn btn-sm btn-outline-success">
                                 移除
                             </button>
+                        </form>
+                        &nbsp;
+                        <form action="{% url 'mall:send_email' %}" method="post" style="margin: 0;">
+                            {% csrf_token %}
+                            <input name="my_id" type="hidden" value="{{ my.id }}">
                             <button type="submit" class="btn btn-sm btn-outline-danger">
                                 购买
                             </button>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -87,9 +96,31 @@
             <h4 class="alert-heading">这里空空如也。。。</h4>
 
             <hr>
-        <a href="{% url 'mall:home' %}" class="alert-link">回到首页</a>
+            <a href="{% url 'mall:home' %}" class="alert-link">回到首页</a>
         </div>
+
     {% endfor %}
+
+    <hr>
+
+{#    移除所有商品，有时间的话可以选择实现一下 #}
+{#    <form action="{% url 'mall:cart' %}" method="post" style="margin: 0;">#}
+{#        {% csrf_token %}#}
+{#        <input name="remove" type="hidden" value="1">#}
+{#        <input name="my_id" type="hidden" value="{{ my.id }}">#}
+{#        &nbsp;#}
+{#        <button type="submit" class="btn btn-sm btn-outline-success">#}
+{#            移除#}
+{#        </button>#}
+{#    </form>#}
+
+    {% if my_cart %}
+        <form method="post" action="{% url 'mall:send_email' %}">
+            {% csrf_token %}
+            <input name="buy_all" value="yes" type="hidden">
+            <button type="submit" class="btn-lg btn-block btn btn-outline-danger">结算所有</button>
+        </form>
+    {% endif %}
 
 
 {% endblock content %}

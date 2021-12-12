@@ -1,0 +1,13 @@
+{% extends 'mall/base.html' %}
+
+
+{% block header %}
+
+{% endblock header %}
+
+
+{% block content %}
+    {% for ar in all_received %}
+        <p>{{ ar.name }}</p>
+    {% endfor %}
+{% endblock content %}

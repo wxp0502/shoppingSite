@@ -1,23 +1,105 @@
 {% extends 'mall/base.html' %}
 
 {% block header %}
-    <br><h3>付款清单</h3><hr>
+    <br><h3>付款清单</h3>
+    <hr>
 {% endblock header %}
 
 {% block content %}
-    {% for g in goods %}
-        <p>{{ g.goods.name }}</p>
+
+    {% if wanted %}
+        <div class="row">
+
+            <div class="card mb-3" style="max-height: 100px; width: 100%;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div style="overflow: hidden;">
+                            <div class="zoomImage img-thumbnail"
+                                 style="
+                                         background-image:url('/media/{{ wanted.goods.photo }}');
+                                         width: 100px;
+                                         height: 100px;
+                                         {#padding-bottom: 100%;#}
+                                         overflow: hidden;
+                                         background-position: center center;
+                                         background-repeat: no-repeat;
+                                         -webkit-background-size: cover;
+                                         -moz-background-size: cover;
+                                         background-size: cover;"></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <span style="line-height: 100px">&nbsp;&nbsp; {{ wanted.goods.name }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text"
+                              style="line-height: 100px; color: coral;"> <small>￥:</small>  {{ wanted.goods.price|floatformat }}
+                                × {{ wanted.amount }} = {{ wanted.total_cost|floatformat }}
+                        </span>
+                    </div>
+                    <div class="col-2 text-center" style="display: flex; justify-content: center;align-items: center;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% for a in all_my %}
+        <div class="row">
+
+            <div class="card mb-3" style="max-height: 100px; width: 100%;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div style="overflow: hidden;">
+                            <div class="zoomImage img-thumbnail"
+                                 style="
+                                         background-image:url('/media/{{ a.goods.photo }}');
+                                         width: 100px;
+                                         height: 100px;
+                                         {#padding-bottom: 100%;#}
+                                         overflow: hidden;
+                                         background-position: center center;
+                                         background-repeat: no-repeat;
+                                         -webkit-background-size: cover;
+                                         -moz-background-size: cover;
+                                         background-size: cover;"></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <span style="line-height: 100px">&nbsp;&nbsp; {{ a.goods.name }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text"
+                              style="line-height: 100px; color: coral;"> <small>￥:</small>  {{ a.goods.price|floatformat }}
+                                × {{ a.amount }} = {{ a.total_cost|floatformat }}
+                        </span>
+                    </div>
+                    <div class="col-2 text-center" style="display: flex; justify-content: center;align-items: center;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
-    <form action="{% url 'mall:purchased' %}" method="post">
+
+    <h4 class="text" style="color: coral">共计 <small>￥:</small>{{ total_cost }}</h4>
+    <hr>
+    <form action="{% url 'mall:purchased' %}" method="post" style="width: 100%">
         {% csrf_token %}
         <div class="form-group">
             <label for="exampleInputEmail1">邮箱：</label>
-            <input name="email" type="email" class="form-control" id="exampleInputEmail1"
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" required="required"
                    aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">输入邮箱以追踪商品物流信息</small>
         </div>
-        <input name="goods" type="hidden" value="{{ goods }}">
-        <button type="submit" class="btn btn-danger">付款</button>
+        {% if wanted %}
+            <input name="wanted_id" type="hidden" value="{{ wanted.id }}">
+        {% else %}
+            <input name="buy_all" type="hidden" value="yes">
+        {% endif %}
+
+        <button type="submit" class="btn btn-block  btn-outline-danger">付款</button>
     </form>
 
 {% endblock content %}
