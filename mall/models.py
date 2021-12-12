@@ -23,3 +23,6 @@ class MyCommodity(models.Model):
 
     def __str__(self):
         return self.goods.name
+
+    def total_cost(self):
+        return self.amount * self.goods.price

@@ -5,55 +5,89 @@
 {% block header %}
     <br><h3>{{ user.username }} 的购物车</h3>
     <hr>
-    <p class="container row" style="margin: 0">
-    <span class="col-4 text-left" style="margin-left: 0">
-        商品详情
-    </span>
-        <span class="col-2">
-                单价
-            </span>
+    <div class="row" style="margin: 0">
+        <div class="col-2 text-left">
+            图片展示
+        </div>
+        <div class="col-2 text-left" style="margin-left: 0">
+            商品名称
+        </div>
+        <div class="col-2">
+            单价
+        </div>
 
-        <span class="col-2">
-                数量
-            </span>
-        <span class="col-2">
-                金额
-            </span>
-        <span class="col-2 text-right">
-                操作
-            </span>
-    </p>
+        <div class="col-2">
+            数量
+        </div>
+        <div class="col-2">
+            金额
+        </div>
+        <div class="col-2 text-center">
+            操作
+        </div>
+    </div><br>
 
 {% endblock header %}
 
 
 {% block content %}
     {% for my in my_cart %}
-        <div class="container row" style="margin: 0">
-    <span class="col-4 text-left" style="margin-left: 0">
-        {{ my.goods.name }}
-    </span>
-            <span class="col-2">
-                {{ my.goods.price }}
-            </span>
+        <div class="row">
 
-            <span class="col-2">
-                {{ my.amount }}
-            </span>
-            <span class="col-2">
-                {{ my.amount }} * {{ my.goods.price }}
-            </span>
-            <span class="col-2 text-right">
-                <!-- Button trigger modal -->
-                <form action="{% url 'mall:send_email' %}" method="post">
-                    {% csrf_token %}
-                    <input name="my_id" type="hidden" value="{{ my.id }}">
-                        <button type="submit" class="btn btn-outline-danger">
-                            购买
-                        </button>
-                </form>
-            </span>
+            <div class="card mb-3" style="max-height: 100px; width: 100%;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div style="overflow: hidden;">
+                            <div class="zoomImage img-thumbnail"
+                                 style="
+                                         background-image:url('/media/{{ my.goods.photo }}');
+                                         width: 100px;
+                                         height: 100px;
+                                         {#padding-bottom: 100%;#}
+                                         overflow: hidden;
+                                         background-position: center center;
+                                         background-repeat: no-repeat;
+                                         -webkit-background-size: cover;
+                                         -moz-background-size: cover;
+                                         background-size: cover;"></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <span style="line-height: 100px">&nbsp;&nbsp; {{ my.goods.name }}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text"
+                              style="line-height: 100px; color: coral;"> <small>￥:</small> {{ my.goods.price|floatformat }}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span style="line-height: 100px">{{ my.amount }}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text"
+                              style="line-height: 100px; color: coral"> <small>￥:</small> {{ my.total_cost|floatformat }}</span>
+                    </div>
+                    <div class="col-2 text-center" style="display: flex; justify-content: center;align-items: center;">
+                        <form action="{% url 'mall:send_email' %}" method="post" style="margin: 0;">
+                            {% csrf_token %}
+                            <input name="my_id" type="hidden" value="{{ my.id }}">
+                            <button type="submit" class="btn btn-sm btn-outline-success">
+                                移除
+                            </button>
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                购买
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
 
+        <div class="alert alert-secondary" role="alert">
+            <h4 class="alert-heading">这里空空如也。。。</h4>
+
+            <hr>
+        <a href="{% url 'mall:home' %}" class="alert-link">回到首页</a>
         </div>
     {% endfor %}
 

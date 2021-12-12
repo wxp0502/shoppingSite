@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from .models import Commodity, MyCommodity
-
+import django.template.defaultfilters
 
 # Create your views here.
 
@@ -15,20 +15,21 @@ def homepage(request):
         # print('---------------')
         gid = request.POST['gid']
         # print(gid)
-        mys = MyCommodity.objects.all()
+        mys = MyCommodity.objects.filter(owner=request.user).order_by('date_added')
         flag = 0
         for m in mys:
-            # print(m.goods.id, end= '--')
-            # print(type(m.goods.id))
-            # print(m.goods.id == gid)
-            # print(type(gid))
+            print(m.goods.id, end='--')
+            print(type(m.goods.id))
+            print(m.goods.id == gid)
+            print(type(gid))
 
             if m.goods.id == eval(gid):
-                # print('================')
+                print('================')
                 m.amount += 1
                 m.save()
                 flag += 1
         if flag == 0:
+            print('what ?')
             new_my = MyCommodity(amount=1,
                                  goods=Commodity.objects.get(id=gid),
                                  owner=request.user)
@@ -44,6 +45,9 @@ def cart(request):
     """ 显示用户的购物车 """
     my_cart = MyCommodity.objects.filter(owner=request.user).order_by('date_added')
     context = {'my_cart': my_cart}
+    print('cart view yes')
+    for m in my_cart:
+        print(m.goods.name)
     return render(request, 'mall/cart.html', context)
 
 
