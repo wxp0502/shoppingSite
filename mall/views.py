@@ -98,7 +98,7 @@ def purchased(request):
             text += f'数量:  {wanted.amount}    '
             text += f'总价:  ￥{wanted.total_cost()} \n'
             # 加入已购买的宝贝
-            new_received = ReceivedCommodity(name=wanted.goods.name, amount=wanted.amount, price=wanted.goods.price)
+            new_received = ReceivedCommodity(name=wanted.goods.name, amount=wanted.amount, price=wanted.goods.price, photo=wanted.goods.photo)
             new_received.save()
             # 从购物车移出此商品
             wanted.delete()
@@ -110,7 +110,7 @@ def purchased(request):
                 text += f'数量:  {a.amount}    '
                 text += f'总价:  ￥{a.total_cost()} \n'
                 # 加入已购买的宝贝
-                new_received = ReceivedCommodity(name=a.goods.name, amount=a.amount, price=a.goods.price)
+                new_received = ReceivedCommodity(name=a.goods.name, amount=a.amount, price=a.goods.price, photo=a.goods.photo)
                 new_received.save()
 
             # 清除购物车

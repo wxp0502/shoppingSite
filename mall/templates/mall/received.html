@@ -2,12 +2,82 @@
 
 
 {% block header %}
+    <br><h3>{{ user.username }} 已购买的宝贝</h3>
+    <hr>
+    <div class="row" style="margin: 0">
+        <div class="col-2 text-left">
+            图片展示
+        </div>
+        <div class="col-2 text-left" style="margin-left: 0">
+            商品名称
+        </div>
+        <div class="col-2">
+            单价
+        </div>
 
+        <div class="col-1">
+            数量
+        </div>
+        <div class="col-2">
+            金额
+        </div>
+        <div class="col-3 text-center">
+            购买日期
+        </div>
+    </div><br>
 {% endblock header %}
 
 
 {% block content %}
     {% for ar in all_received %}
-        <p>{{ ar.name }}</p>
+        <div class="row">
+
+            <div class="card mb-3" style="max-height: 100px; width: 100%;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div style="overflow: hidden;">
+                            <div class="zoomImage img-thumbnail"
+                                 style="
+                                         background-image:url('/media/{{ ar.photo }}');
+                                         width: 100px;
+                                         height: 100px;
+                                         {#padding-bottom: 100%;#}
+                                         overflow: hidden;
+                                         background-position: center center;
+                                         background-repeat: no-repeat;
+                                         -webkit-background-size: cover;
+                                         -moz-background-size: cover;
+                                         background-size: cover;"></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <span style="line-height: 100px">&nbsp;&nbsp; {{ ar.name }}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text"
+                              style="line-height: 100px; color: coral;"> <small>￥:</small> {{ ar.price|floatformat }}</span>
+                    </div>
+                    <div class="col-md-1">
+                        <span style="line-height: 100px">{{ ar.amount }}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text"
+                              style="line-height: 100px; color: coral"> <small>￥:</small> {{ ar.total_cost|floatformat }}</span>
+                    </div>
+                    <div class="col-3 text-center" style="display: flex; justify-content: center;align-items: center;">
+                        <span style="line-height: 100px">{{ ar.bought_date|date:'Y-m-d H:i:s'}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+
+        <div class="alert alert-secondary" role="alert">
+            <h4 class="alert-heading">这里空空如也。。。</h4>
+
+            <hr>
+            <a href="{% url 'mall:home' %}" class="alert-link">回到首页</a>
+        </div>
+
     {% endfor %}
 {% endblock content %}

@@ -34,6 +34,7 @@ class ReceivedCommodity(models.Model):
     name = models.CharField(max_length=50)
     amount = models.PositiveIntegerField()
     price = models.FloatField()
+    photo = models.ImageField(upload_to='mall/images')
 
     def __str__(self):
         return self.name
