@@ -1,0 +1,107 @@
+{% extends 'mall/base.html' %}
+
+{% block header %}
+    <div class="row">
+        <div class="col-md-10">
+            <br><h4>管理&nbsp; WMall&nbsp;的商品</h4>
+        </div>
+
+        <div class="col-md-2" style="display: flex; justify-content: end;align-items: end;">
+            <a href="{% url 'mall:add_commodity' %}">
+                <button type="button" class="btn btn-block btn-outline-info">添加商品</button>
+            </a>
+        </div>
+    </div>
+    <hr>
+
+    {% if commodities %}
+        <div class="row" style="margin: 0">
+            <div class="col-2 text-left">
+                图片展示
+            </div>
+            <div class="col-2 text-left" style="margin-left: 0">
+                商品名称
+            </div>
+            <div class="col-2">
+                单价
+            </div>
+
+            <div class="col-2">
+                描述
+            </div>
+            <div class="col-4 text-center">
+                操作
+            </div>
+        </div>
+    {% endif %}
+
+    <br>
+{% endblock header %}
+
+{% block content %}
+    {% for commodity in commodities %}
+        <div class="row">
+
+            <div class="card mb-3" style="max-height: 100px; width: 100%;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div style="overflow: hidden;">
+                            <div class="zoomImage img-thumbnail"
+                                 style="
+                                         background-image:url('/media/{{ commodity.photo }}');
+                                         width: 100px;
+                                         height: 100px;
+                                         {#padding-bottom: 100%;#}
+                                         overflow: hidden;
+                                         background-position: center center;
+                                         background-repeat: no-repeat;
+                                         -webkit-background-size: cover;
+                                         -moz-background-size: cover;
+                                         background-size: cover;"></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <span style="line-height: 100px">&nbsp;&nbsp; {{ commodity.name }}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text"
+                              style="line-height: 100px; color: coral;"> <strong><small>￥:</small> {{ commodity.price|floatformat }}</strong></span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text"
+                              style="line-height: 100px;">{{ commodity.description }}</span>
+                    </div>
+                    <div class="col-4 text-center" style="display: flex; justify-content: center;align-items: center;">
+                        <form action="#" method="post" style="margin: 0;">
+                            {% csrf_token %}
+                            <input name="modify" type="hidden" value="yes">
+                            <input name="cd_id" type="hidden" value="{{ commodity.id }}">
+                            &nbsp;
+                            <button type="submit" class="btn btn-outline-success">
+                                修改
+                            </button>
+                        </form>
+                        &nbsp;
+                        <form action="{% url 'mall:management' %}" method="post" style="margin: 0;">
+                            {% csrf_token %}
+                            <input name="cd_id" type="hidden" value="{{ commodity.id }}">
+                            <button type="submit" class="btn btn-outline-danger">
+                                删除
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+
+        <div class="alert alert-secondary" role="alert">
+            <h4 class="alert-heading">这里空空如也。。。</h4>
+
+            <hr>
+            <p>快添加商品让 WMall 运作起来吧！</p>
+        </div>
+
+    {% endfor %}
+{% endblock content %}

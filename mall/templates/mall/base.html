@@ -16,6 +16,7 @@
 <nav class="navbar navbar-expand-lg navbar-light" width="100%" style="background-color: mintcream">
     <div class="container">
         <a class="navbar-brand" href="{% url 'mall:index' %}">WMall</a>
+
         {#        缩小后隐藏的按钮 #}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll"
                 aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +44,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'mall:received' %}">已买到的宝贝</a>
                     </li>
+
+                    {% if user.email %}
+                        <li class="nav-item">
+                        <a class="nav-link" href="{% url 'mall:management' %}">商品管理</a>
+                    </li>
+                    {% endif %}
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:logout' %}">注销</a>

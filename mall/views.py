@@ -1,8 +1,12 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.urls import reverse
+
 from .models import Commodity, MyCommodity, ReceivedCommodity
 
+from .forms import CommodityForm
 
 # Create your views here.
 
@@ -128,6 +132,54 @@ def purchased(request):
 
 @login_required()
 def received(request):
+    # 记得加上用户独立的功能。。
     all_received = ReceivedCommodity.objects.all()
     context = {'all_received': all_received}
     return render(request, 'mall/received.html', context)
+
+
+@login_required()
+def management(request):
+    print('---------')
+    if request.method == 'POST':
+        modify = request.POST.get('modify')
+        if modify:
+            pass
+        else:   # 删除商品
+            cd_id = request.POST.get('cd_id')
+            if cd_id:
+                temp = Commodity.objects.get(id=cd_id)
+                temp.delete()
+    commodities = Commodity.objects.all()
+    for c in commodities:
+        print(c.name)
+    context = {'commodities': commodities}
+    return render(request, 'mall/management.html', context)
+
+
+@login_required()
+def add_commodity(request):
+    if request.method == 'POST':
+        form = CommodityForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('mall:management'))
+    else:
+        form = CommodityForm()
+    context = {'form': form}
+    return render(request, 'mall/add_commodity.html', context)
+
+
+@login_required()
+def modify_commodity(request, cd_id):
+    commodity = Commodity.objects.get(id=cd_id)
+
+    if request.method == 'POST':
+        form = CommodityForm(instance=commodity, data=(request.POST, request.FILES))
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('mall:management'))
+    else:
+        form = CommodityForm(instance=commodity)
+    context = {'form': form, 'commodity': commodity}
+    return render(request, 'mall/modify_commodity.html', context)

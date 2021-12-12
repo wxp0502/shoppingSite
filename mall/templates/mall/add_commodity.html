@@ -1,0 +1,14 @@
+{% extends 'mall/base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+    <br><h4>添加一个新的商品</h4><hr>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'mall:add_commodity' %}" method="post"  class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn-lg btn-block btn btn-outline-success">添加</button>
+    </form>
+{% endblock %}

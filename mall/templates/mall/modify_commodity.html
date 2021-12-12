@@ -1,0 +1,14 @@
+{% extends 'mall/base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+    <br><h4>修改 {{ commodity.name }} 的相关属性</h4><hr>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'mall:modify_commodity' commodity.id %}" method="post"  class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn-lg btn-block btn btn-outline-success">确认修改</button>
+    </form>
+{% endblock %}

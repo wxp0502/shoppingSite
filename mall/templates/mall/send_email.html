@@ -33,8 +33,10 @@
                     </div>
                     <div class="col-md-6">
                         <span class="text"
-                              style="line-height: 100px; color: coral;"> <small>￥:</small>  {{ wanted.goods.price|floatformat }}
+                              style="line-height: 100px; color: coral;"> <strong>
+                            <small>￥:</small>  {{ wanted.goods.price|floatformat }}
                                 × {{ wanted.amount }} = {{ wanted.total_cost|floatformat }}
+                        </strong>
                         </span>
                     </div>
                     <div class="col-2 text-center" style="display: flex; justify-content: center;align-items: center;">
@@ -83,7 +85,7 @@
         </div>
     {% endfor %}
 
-    <h4 class="text" style="color: coral">共计 <small>￥:</small>{{ total_cost }}</h4>
+    <h4 class="text" style="color: coral">共计 <strong><small>￥:</small>{{ total_cost }}</strong></h4>
     <hr>
     <form action="{% url 'mall:purchased' %}" method="post" style="width: 100%">
         {% csrf_token %}

@@ -55,14 +55,14 @@
                     </div>
                     <div class="col-md-2">
                         <span class="text"
-                              style="line-height: 100px; color: coral;"> <small>￥:</small> {{ ar.price|floatformat }}</span>
+                              style="line-height: 100px; color: coral;"> <strong><small>￥:</small> {{ ar.price|floatformat }}</strong></span>
                     </div>
                     <div class="col-md-1">
                         <span style="line-height: 100px">{{ ar.amount }}</span>
                     </div>
                     <div class="col-md-2">
                         <span class="text"
-                              style="line-height: 100px; color: coral"> <small>￥:</small> {{ ar.total_cost|floatformat }}</span>
+                              style="line-height: 100px; color: coral"> <strong><small>￥:</small> {{ ar.total_cost|floatformat }}</strong></span>
                     </div>
                     <div class="col-3 text-center" style="display: flex; justify-content: center;align-items: center;">
                         <span style="line-height: 100px">{{ ar.bought_date|date:'Y-m-d H:i:s'}}</span>

@@ -5,27 +5,32 @@
 {% block header %}
     <br><h3>{{ user.username }} 的购物车</h3>
     <hr>
-    <div class="row" style="margin: 0">
-        <div class="col-2 text-left">
-            图片展示
-        </div>
-        <div class="col-2 text-left" style="margin-left: 0">
-            商品名称
-        </div>
-        <div class="col-2">
-            单价
-        </div>
 
-        <div class="col-2">
-            数量
+    {% if my_cart %}
+        <div class="row" style="margin: 0">
+            <div class="col-2 text-left">
+                图片展示
+            </div>
+            <div class="col-2 text-left" style="margin-left: 0">
+                商品名称
+            </div>
+            <div class="col-2">
+                单价
+            </div>
+
+            <div class="col-2">
+                数量
+            </div>
+            <div class="col-2">
+                金额
+            </div>
+            <div class="col-2 text-center">
+                操作
+            </div>
         </div>
-        <div class="col-2">
-            金额
-        </div>
-        <div class="col-2 text-center">
-            操作
-        </div>
-    </div><br>
+    {% endif %}
+
+    <br>
 
 {% endblock header %}
 
@@ -57,14 +62,14 @@
                     </div>
                     <div class="col-md-2">
                         <span class="text"
-                              style="line-height: 100px; color: coral;"> <small>￥:</small> {{ my.goods.price|floatformat }}</span>
+                              style="line-height: 100px; color: coral;"> <strong><small>￥:</small> {{ my.goods.price|floatformat }}</strong></span>
                     </div>
                     <div class="col-md-2">
                         <span style="line-height: 100px">{{ my.amount }}</span>
                     </div>
                     <div class="col-md-2">
                         <span class="text"
-                              style="line-height: 100px; color: coral"> <small>￥:</small> {{ my.total_cost|floatformat }}</span>
+                              style="line-height: 100px; color: coral"> <strong><small>￥:</small> {{ my.total_cost|floatformat }}</strong></span>
                     </div>
                     <div class="col-2 text-center" style="display: flex; justify-content: center;align-items: center;">
 
@@ -103,16 +108,16 @@
 
     <hr>
 
-{#    移除所有商品，有时间的话可以选择实现一下 #}
-{#    <form action="{% url 'mall:cart' %}" method="post" style="margin: 0;">#}
-{#        {% csrf_token %}#}
-{#        <input name="remove" type="hidden" value="1">#}
-{#        <input name="my_id" type="hidden" value="{{ my.id }}">#}
-{#        &nbsp;#}
-{#        <button type="submit" class="btn btn-sm btn-outline-success">#}
-{#            移除#}
-{#        </button>#}
-{#    </form>#}
+    {#    移除所有商品，有时间的话可以选择实现一下 #}
+    {#    <form action="{% url 'mall:cart' %}" method="post" style="margin: 0;">#}
+    {#        {% csrf_token %}#}
+    {#        <input name="remove" type="hidden" value="1">#}
+    {#        <input name="my_id" type="hidden" value="{{ my.id }}">#}
+    {#        &nbsp;#}
+    {#        <button type="submit" class="btn btn-sm btn-outline-success">#}
+    {#            移除#}
+    {#        </button>#}
+    {#    </form>#}
 
     {% if my_cart %}
         <form method="post" action="{% url 'mall:send_email' %}">
