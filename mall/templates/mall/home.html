@@ -34,11 +34,11 @@
                     <p class="text-left" style="color: coral;margin: 0">
                         &nbsp;&nbsp; <small>￥：</small> {{ good.price }}
                     </p>
-                    <a href="{{ good.id }}">
-                        <button type="button" class="btn btn-light btn-block btn-sm">
-                            查看详情
-                        </button>
-                    </a>
+{#                    <a href="{{ good.id }}">#}
+{#                        <button type="button" class="btn btn-light btn-block btn-sm">#}
+{#                            查看详情#}
+{#                        </button>#}
+{#                    </a>#}
                     {% if user.is_authenticated %}
                         <form action="{% url 'mall:home' %}" method="post" style="margin: 0;">
                         {% csrf_token %}
