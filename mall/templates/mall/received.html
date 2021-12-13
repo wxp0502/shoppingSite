@@ -71,12 +71,12 @@
             </div>
         </div>
         {% empty %}
-
-        <div class="alert alert-secondary" role="alert">
-            <h4 class="alert-heading">这里空空如也。。。</h4>
-
-            <hr>
-            <a href="{% url 'mall:home' %}" class="alert-link">回到首页</a>
+        <div class="jumbotron">
+            <h1 class="display-4">😀😀😀 <br> 这里空空如也。。。</h1>
+            <p class="lead">
+                快去选购心仪的商品并下单吧</p>
+            <hr class="my-4">
+            <a class="btn btn-outline-success btn-lg" href="{% url 'mall:home' %}" role="button">返回首页</a>
         </div>
 
     {% endfor %}

@@ -1,0 +1,37 @@
+{% extends 'mall/base.html' %}
+
+{% block header %}
+    <br><h3>销售统计报表</h3>
+    <hr>
+{% endblock %}
+
+
+{% block content %}
+
+
+    <table class="table" style="width: 100%">
+        <thead>
+        <tr>
+            {#            <th scope="col">编号</th>#}
+            <th scope="col">商品名</th>
+            <th scope="col">单价</th>
+            <th scope="col">销售量</th>
+            <th scope="col">销售总额</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        {% for name, info in all_sale.items %}
+            <tr>
+                {#                <th scope="row">1</th>#}
+                <td>{{ name }}</td>
+                <td>{{ info.0|floatformat }}</td>
+                <td>{{ info.1 }}</td>
+                <td>{{ info.2|floatformat }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

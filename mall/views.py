@@ -8,6 +8,7 @@ from .models import Commodity, MyCommodity, ReceivedCommodity
 
 from .forms import CommodityForm
 
+
 # Create your views here.
 
 def index(request):
@@ -102,8 +103,14 @@ def purchased(request):
             text += f'数量:  {wanted.amount}    '
             text += f'总价:  ￥{wanted.total_cost()} \n'
             # 加入已购买的宝贝
-            new_received = ReceivedCommodity(name=wanted.goods.name, amount=wanted.amount, price=wanted.goods.price, photo=wanted.goods.photo)
+            new_received = ReceivedCommodity(name=wanted.goods.name, amount=wanted.amount, price=wanted.goods.price,
+                                             photo=wanted.goods.photo)
+            new_received.owner = request.user
             new_received.save()
+            # 给此商品 加 销量
+            com = Commodity.objects.get(id=wanted.goods.id)
+            com.sales += wanted.amount
+            com.save()
             # 从购物车移出此商品
             wanted.delete()
 
@@ -113,8 +120,15 @@ def purchased(request):
                 text += f'{a.goods.name}   '
                 text += f'数量:  {a.amount}    '
                 text += f'总价:  ￥{a.total_cost()} \n'
+
+                # 给此商品 加 销量
+                com = Commodity.objects.get(id=a.goods.id)
+                com.sales += a.amount
+                com.save()
                 # 加入已购买的宝贝
-                new_received = ReceivedCommodity(name=a.goods.name, amount=a.amount, price=a.goods.price, photo=a.goods.photo)
+                new_received = ReceivedCommodity(name=a.goods.name, amount=a.amount, price=a.goods.price,
+                                                 photo=a.goods.photo)
+                new_received.owner = request.user
                 new_received.save()
 
             # 清除购物车
@@ -133,7 +147,8 @@ def purchased(request):
 @login_required()
 def received(request):
     # 记得加上用户独立的功能。。
-    all_received = ReceivedCommodity.objects.all()
+    # 已经加上
+    all_received = ReceivedCommodity.objects.filter(owner=request.user).order_by('bought_date')
     context = {'all_received': all_received}
     return render(request, 'mall/received.html', context)
 
@@ -145,7 +160,7 @@ def management(request):
         modify = request.POST.get('modify')
         if modify:
             pass
-        else:   # 删除商品
+        else:  # 删除商品
             cd_id = request.POST.get('cd_id')
             if cd_id:
                 temp = Commodity.objects.get(id=cd_id)
@@ -183,3 +198,25 @@ def modify_commodity(request, cd_id):
         form = CommodityForm(instance=commodity)
     context = {'form': form, 'commodity': commodity}
     return render(request, 'mall/modify_commodity.html', context)
+
+
+@login_required()
+def sales_statistics(request):
+    all_received = ReceivedCommodity.objects.all()
+    # 不同用户买的商品应该归类到一起
+    all_sale = {}
+    # 单价 ； 销量 ； 总价
+    for a in all_received:
+        if a.name in all_sale:
+            all_sale[f'{a.name}'][0] = a.price              # 单价
+            all_sale[f'{a.name}'][1] += a.amount            # 销量
+            all_sale[f'{a.name}'][2] += a.price * a.amount  # 总价
+        else:
+            temp = {f'{a.name}': [a.price, a.amount, a.price * a.amount]}
+            all_sale.update(temp)
+    for key in all_sale:
+        print('-----------')
+        print(key)
+        print(all_sale[key][0])
+    context = {'all_sale': all_sale}
+    return render(request, 'mall/sales_statistics.html', context)
