@@ -26,10 +26,10 @@
                 单价
             </div>
 
-            <div class="col-2">
+            <div class="col-3">
                 描述
             </div>
-            <div class="col-4 text-center">
+            <div class="col-3 text-center">
                 操作
             </div>
         </div>
@@ -67,20 +67,25 @@
                         <span class="text"
                               style="line-height: 100px; color: coral;"> <strong><small>￥:</small> {{ commodity.price|floatformat }}</strong></span>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <span class="text"
                               style="line-height: 100px;">{{ commodity.description }}</span>
                     </div>
-                    <div class="col-4 text-center" style="display: flex; justify-content: center;align-items: center;">
-                        <form action="#" method="post" style="margin: 0;">
-                            {% csrf_token %}
-                            <input name="modify" type="hidden" value="yes">
-                            <input name="cd_id" type="hidden" value="{{ commodity.id }}">
-                            &nbsp;
-                            <button type="submit" class="btn btn-outline-success">
+                    <div class="col-3 text-center" style="display: flex; justify-content: center;align-items: center;">
+{#                        <form action="{% url 'mall:modify_commodity' commodity.id %}" method="post" style="margin: 0;">#}
+{#                            {% csrf_token %}#}
+{#                            <input name="modify" type="hidden" value="yes">#}
+{#                            <input name="cd_id" type="hidden" value="{{ commodity.id }}">#}
+{#                            &nbsp;#}
+{#                            <button type="submit" class="btn btn-outline-success">#}
+{#                                修改#}
+{#                            </button>#}
+{#                        </form>#}
+                        <a href="{% url 'mall:modify_commodity' commodity.id %}">
+                            <button type="button" class="btn btn-outline-success">
                                 修改
                             </button>
-                        </form>
+                        </a>
                         &nbsp;
                         <form action="{% url 'mall:management' %}" method="post" style="margin: 0;">
                             {% csrf_token %}

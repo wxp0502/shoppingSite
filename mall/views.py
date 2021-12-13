@@ -175,7 +175,7 @@ def modify_commodity(request, cd_id):
     commodity = Commodity.objects.get(id=cd_id)
 
     if request.method == 'POST':
-        form = CommodityForm(instance=commodity, data=(request.POST, request.FILES))
+        form = CommodityForm(instance=commodity, data=request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('mall:management'))
