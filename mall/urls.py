@@ -16,4 +16,5 @@ urlpatterns = [
     path('add_commodity/', views.add_commodity, name='add_commodity'),
     path('modify_commodity/<int:cd_id>', views.modify_commodity, name='modify_commodity'),
     path('sales_statistics/', views.sales_statistics, name='sales_statistics'),
+    path('user_statistics/', views.user_statistics, name='user_statistics')
 ]

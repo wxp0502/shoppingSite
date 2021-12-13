@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.urls import reverse
 
@@ -208,15 +209,46 @@ def sales_statistics(request):
     # 单价 ； 销量 ； 总价
     for a in all_received:
         if a.name in all_sale:
-            all_sale[f'{a.name}'][0] = a.price              # 单价
-            all_sale[f'{a.name}'][1] += a.amount            # 销量
+            all_sale[f'{a.name}'][0] = a.price  # 单价
+            all_sale[f'{a.name}'][1] += a.amount  # 销量
             all_sale[f'{a.name}'][2] += a.price * a.amount  # 总价
         else:
             temp = {f'{a.name}': [a.price, a.amount, a.price * a.amount]}
             all_sale.update(temp)
-    for key in all_sale:
-        print('-----------')
-        print(key)
-        print(all_sale[key][0])
+    # for key in all_sale:
+    #     print('-----------')
+    #     print(key)
+    #     print(all_sale[key][0])
     context = {'all_sale': all_sale}
     return render(request, 'mall/sales_statistics.html', context)
+
+
+@login_required()
+def user_statistics(request):
+    # users = User.objects.all()    似乎没有什么必要
+    # 订单记录
+    received_c = ReceivedCommodity.objects.all().order_by('bought_date')
+    indent = {}
+    for r in received_c:
+        if r.owner.email:
+            continue  # 忽略管理员用户
+        elif r.owner in indent:
+            # 已经有此用户，加一列购买记录
+            indent[r.owner].append([r.owner.username, r.name, r.price, r.amount, r.total_cost(), r.bought_date])
+        else:
+            temp = {r.owner: [[r.owner.username, r.name, r.price, r.amount, r.total_cost(), r.bought_date]]}
+            indent.update(temp)
+    # 购物车记录
+    my_c = MyCommodity.objects.all().order_by('date_added')
+    cart_record = {}
+    for m in my_c:
+        if m.owner.email:
+            continue
+        elif m.owner in cart_record:
+            cart_record[m.owner].append([m.owner.username, m.goods.name, m.goods.price, m.amount, m.total_cost(), m.date_added])
+        else:
+            temp = {m.owner: [[m.owner.username, m.goods.name, m.goods.price, m.amount, m.total_cost(), m.date_added]]}
+            cart_record.update(temp)
+
+    context = {'indent': indent, 'cart_record': cart_record}
+    return render(request, 'mall/user_statistics.html', context)

@@ -1,0 +1,73 @@
+{% extends 'mall/base.html' %}
+
+{% block header %}
+    <br>
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="alert-sm alert-success" role="alert">
+        <h5 class="text-center">订单记录</h5>
+    </div>
+    <hr>
+    {% for owner, list in indent.items %}
+        <h6 style="color: lightcoral"><strong>{{ list.0.0 }} 的订单</strong></h6>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">商品名</th>
+                <th scope="col">单价</th>
+                <th scope="col">数量</th>
+                <th scope="col">金额</th>
+                <th scope="col">购买日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for l in list %}
+                <tr>
+                    <td>{{ l.1 }}</td>
+                    <td>{{ l.2|floatformat }}</td>
+                    <td>{{ l.3 }}</td>
+                    <td>{{ l.4|floatformat }}</td>
+                    <td>{{ l.5|date:'Y-m-d H:i:s' }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+
+    <div class="alert-sm alert-success" role="alert">
+        <h5 class="text-center">购物车记录</h5>
+    </div>
+
+    <hr>
+    {% for owner, list in cart_record.items %}
+        <h6 style="color: lightcoral"><strong>{{ list.0.0 }} 的购物车</strong></h6>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">商品名</th>
+                <th scope="col">单价</th>
+                <th scope="col">数量</th>
+                <th scope="col">金额</th>
+                <th scope="col">加入日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for l in list %}
+                <tr>
+                    <td>{{ l.1 }}</td>
+                    <td>{{ l.2|floatformat }}</td>
+                    <td>{{ l.3 }}</td>
+                    <td>{{ l.4|floatformat }}</td>
+                    <td>{{ l.5|date:'Y-m-d H:i:s' }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+
+{% endblock %}
