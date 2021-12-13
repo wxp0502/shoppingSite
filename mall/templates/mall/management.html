@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-3">
-                描述
+                上市日期
             </div>
             <div class="col-3 text-center">
                 操作
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-md-3">
                         <span class="text"
-                              style="line-height: 100px;">{{ commodity.description }}</span>
+                              style="line-height: 100px;">{{ commodity.date_added|date:'Y-m-d H:i:s' }}</span>
                     </div>
                     <div class="col-3 text-center" style="display: flex; justify-content: center;align-items: center;">
 {#                        <form action="{% url 'mall:modify_commodity' commodity.id %}" method="post" style="margin: 0;">#}

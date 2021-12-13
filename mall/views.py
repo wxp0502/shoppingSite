@@ -35,7 +35,7 @@ def homepage(request):
                 m.save()
                 flag += 1
         if flag == 0:
-            print('what ?')
+            # print('what ?')
             new_my = MyCommodity(amount=1,
                                  goods=Commodity.objects.get(id=gid),
                                  owner=request.user)
@@ -50,24 +50,24 @@ def homepage(request):
 def cart(request):
     """ 显示用户的购物车 """
     if request.method == 'POST':
-        print('remove ')
+        # print('remove ')
         remove = request.POST['remove']
         my_id = request.POST['my_id']
-        print(type(remove))
+        # print(type(remove))
         if eval(remove) == 1:
-            print('111111111111111')
+            # print('111111111111111')
             temp = MyCommodity.objects.get(id=my_id)
             if temp.amount == 1:
                 temp.delete()
             else:
                 temp.amount -= 1
                 temp.save()
-    print('=========')
+    # print('=========')
     my_cart = MyCommodity.objects.filter(owner=request.user).order_by('date_added')
     context = {'my_cart': my_cart}
-    print('cart view yes')
-    for m in my_cart:
-        print(m.goods.name)
+    # print('cart view yes')
+    # for m in my_cart:
+    #     print(m.goods.name)
     return render(request, 'mall/cart.html', context)
 
 
@@ -156,7 +156,7 @@ def received(request):
 
 @login_required()
 def management(request):
-    print('---------')
+    # print('---------')
     if request.method == 'POST':
         modify = request.POST.get('modify')
         if modify:
@@ -167,8 +167,8 @@ def management(request):
                 temp = Commodity.objects.get(id=cd_id)
                 temp.delete()
     commodities = Commodity.objects.all()
-    for c in commodities:
-        print(c.name)
+    # for c in commodities:
+    #     print(c.name)
     context = {'commodities': commodities}
     return render(request, 'mall/management.html', context)
 
