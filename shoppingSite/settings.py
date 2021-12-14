@@ -144,7 +144,7 @@ BOOTSTRAP4 = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = False  # 是否使用TLS安全传输协议(用于在两个通信应用程序之间提供保密性和数据完整性。)
 EMAIL_USE_SSL = True  # 是否使用SSL加密，qq企业邮箱要求使用
-EMAIL_HOST = 'smtp.qq.com'  # 发送邮件的邮箱 的 SMTP服务器，这里用了163邮箱
+EMAIL_HOST = 'smtp.qq.com'  # 发送邮件的邮箱 的 SMTP服务器，这里用了qq邮箱
 EMAIL_PORT = 465  # 发件箱的SMTP服务器端口
 # 上面配置可以不动，下面配置修改为自己的
 EMAIL_HOST_USER = '2396469068@qq.com'  # 发送邮件的邮箱地址

@@ -16,6 +16,7 @@
 
     <form method="post" action="{% url 'users:login' %}">
         {% csrf_token %}
+        {# bootstrap 格式的表单，快速生成 #}
         {% bootstrap_form form %}
 
         {% buttons %}

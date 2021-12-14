@@ -20,13 +20,16 @@
 - 所用框架：
   - 前端：django4.0
   - 后端：bootstrap4.0
-
 - 结构说明：
   - users：实现用户登录、注册、注销功能
   - mall：实现商务网站功能
   - shoppingSite：项目配置文件
   - media：商品照片存放
   - manage.py：管理程序（接受命令并执行，诸如使用数据库和运行服务器等任务）
+- 使用说明：
+  - clone 项目之后
+  - pip install -r requirements.txt
+  - python manage.py runserver
 - 作者：
   - 学号：201930343469
   - 姓名：温晓平
