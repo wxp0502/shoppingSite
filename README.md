@@ -18,8 +18,8 @@
   - python 3.9.7
   - PostgreSQL 12
 - 所用框架：
-  - 前端：django4.0
-  - 后端：bootstrap4.0
+  - 前端：bootstrap4.0
+  - 后端：django4.0
 - 结构说明：
   - users：实现用户登录、注册、注销功能
   - mall：实现商务网站功能
